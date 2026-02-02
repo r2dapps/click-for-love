@@ -17,45 +17,49 @@ Try clicking **No 🙄**… if you can! Click **Yes 💖** to unlock hearts, con
 
 ## ✨ Features
 
-- 💫 **Neon Edge Glow** – subtle glowing border with moving light effects
+- 💫 **Neon Edge Glow** – pulsing glowing border with moving light effects
 - 💖 **Floating Heart Icons** – animated hearts drift across the screen  
-- ❤️ **Evading "No" Button** – it runs away when you try to click it!  
-- 💌 **Interactive Questions** – fun prompts that guide the user to say Yes  
+- ❤️ **Smart "No" Button** – moves away and changes text when clicked
+- 💌 **Interactive Questions** – 17+ question sets with psychological prompts
 - 🎭 **Card Animations** – shake, pulse, bounce, spin, wiggle, flip  
 - 🎊 **Confetti Finale** – heart-shaped confetti celebrates your love  
 - 🌈 **Dynamic Backgrounds** – 35+ beautiful gradient themes  
 - 🖋 **Custom Name** – add `?name=YourName` in the URL  
 - 📱 **Responsive Design** – works beautifully on mobile & desktop  
-- 🎯 **Psychological Warfare** – cute edition with 17+ question sets
+- 🎯 **Click Tracking** – dynamic messages based on No button clicks
+- 🔒 **Input Sanitization** – safe name handling with character filtering
 
 ---
 
 ## 🛠 Built With
 
-- **HTML5 & CSS3** – Modern web standards
+- **HTML5 & CSS3** – Modern web standards with advanced animations
 - **Vanilla JavaScript** – No frameworks, pure performance  
 - **[Canvas Confetti](https://www.npmjs.com/package/canvas-confetti)** – Heart-shaped confetti magic
-- **CSS Keyframes** – Smooth animations & effects
-- **Responsive Design** – Mobile-first approach
+- **CSS Keyframes** – Smooth animations & visual effects
+- **Responsive Design** – Mobile-first approach with clamp() sizing
 
 ---
 
 ## 🎨 Customization
 
 ### Quick Edits
-- **Messages**: Edit `questionSets`, `notes`, and `finaleSets` arrays
+- **Messages**: Edit `questionSets`, `notes`, `noTexts`, and `finaleSets` arrays
 - **Colors**: Update the `backgrounds` array with your gradients
-- **Animations**: Add new effects in the CSS animations section
+- **Animations**: Modify CSS keyframes for different effects
 - **Timing**: Adjust intervals for hearts and background changes
 
-### Advanced
+### Advanced Features
 ```javascript
-// Add your own question set
+// Custom question sets
 questionSets.push([
   "Your custom question?",
-  "Follow up question",
+  "Follow up question", 
   "Final question"
 ]);
+
+// Dynamic No button responses
+const noTexts = ["Yes 😇", "Maybe 🤔", "Free Candy 🍬"];
 ```
 
 ---
@@ -63,10 +67,21 @@ questionSets.push([
 ## 🎯 How It Works
 
 1. **User visits** → Random background & question set loads
-2. **Tries to click No** → Button runs away using mouse tracking
-3. **Clicks Yes** → Card animates, new question appears
-4. **Reaches finale** → Confetti explosion & personalized message
-5. **Hearts float** → Continuous ambient animation
+2. **Clicks No** → Button moves, changes text, shows click counter messages
+3. **Hovers No** → Button text changes to troll messages
+4. **Clicks Yes** → Card animates, hearts burst, new question appears
+5. **Reaches finale** → Confetti explosion & personalized message
+6. **Background effects** → Continuous neon glow and floating hearts
+
+---
+
+## 🎮 Interactive Elements
+
+- **No Button Panic Animation** – scales and rotates when clicked
+- **Dynamic Click Messages** – 20+ responses based on click count
+- **Hover Trolling** – button text changes on mouse hover
+- **Heart Bursts** – triggered by both Yes and No clicks
+- **Background Transitions** – smooth gradient changes between questions
 
 ---
 
