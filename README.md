@@ -1,6 +1,5 @@
 # 💘 Valentine Alert! 💘
 
-![Valentine Alert Screenshot]
 ![Made with 💖](https://img.shields.io/badge/Made%20with-%F0%9F%92%96-pink)
 ![Demo Online](https://img.shields.io/badge/Demo-Online-brightgreen)
 
@@ -51,3 +50,4 @@ Free to use, share, and spread love ❤️
 ---
 
 **Tip:** Share it with friends and watch them chase the No button! 😈💖
+
