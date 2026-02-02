@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Valentine Alert! 💘</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /*pulse glow*/
+        .card.pulse {
+            animation: pulseGlow 0.6s ease;
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 rgba(255, 77, 109, 0.6);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 30px rgba(255, 77, 109, 0.8);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 rgba(255, 77, 109, 0.6);
+            }
+        }
+
+        .blur-bg {
+            backdrop-filter: blur(6px);
+        }
+
+        /*shake + bounce*/
+        .card.shakeCard {
+            animation: shakeCard 0.4s ease;
+        }
+
+        @keyframes shakeCard {
+            0% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-6px);
+            }
+
+            50% {
+                transform: translateX(6px);
+            }
+
+            75% {
+                transform: translateX(-6px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /* Bounce */
+        .card.bounce {
+            animation: bounceCard 0.6s ease;
+        }
+
+        @keyframes bounceCard {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Spin */
+        .card.spin {
+            animation: spinCard 0.8s ease;
+        }
+
+        @keyframes spinCard {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotate(180deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Wiggle */
+        .card.wiggle {
+            animation: wiggleCard 0.5s ease;
+        }
+
+        @keyframes wiggleCard {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(-8deg);
+            }
+
+            50% {
+                transform: rotate(8deg);
+            }
+
+            75% {
+                transform: rotate(-6deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        /*finale flip*/
+        .card.flip {
+            animation: flipCard 0.8s ease forwards;
+        }
+
+        @keyframes flipCard {
+            from {
+                transform: rotateY(0deg);
+            }
+
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+
+        /* Floating Hearts Background */
+        .hearts-container {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: rgba(255, 77, 109, 0.35);
+            transform: rotate(45deg);
+            animation: floatUp linear forwards;
+            filter: blur(0.5px);
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: inherit;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -9px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: -9px;
+            top: 0;
+        }
+
+        /* Float animation */
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(45deg) scale(0.8);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-140px) rotate(45deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Make sure card stays above */
+        .card {
+            position: relative;
+            z-index: 2;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            overflow: hidden;
+        }
+
+        /* Card */
+        .card {
+            background: #ffffff88;
+            padding: 36px 28px;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Text */
+        h1 {
+            color: #ff4d6d;
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #333;
+            min-height: 48px;
+            margin-bottom: 14px;
+        }
+
+        .note {
+            margin-top: 16px;
+            font-size: 13px;
+            color: #777;
+        }
+
+        /* Buttons Row */
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-start;
+            /* padding-left: 40px; */
+            gap: 16px;
+            position: relative;
+            height: 56px;
+        }
+
+        /* Buttons */
+        button {
+            width: 140px;
+            height: 48px;
+            border: none;
+            border-radius: 999px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+        }
+
+
+        #yesBtn {
+            background: #ff4d6d;
+            color: white;
+        }
+
+        #noBtn {
+            position: absolute;
+            z-index: 10;
+            transition: transform 0.15s ease;
+        }
+
+        #noBtn.runaway {
+            position: fixed;
+            transition: left 0.25s ease, top 0.25s ease;
+        }
+
+
+        /* Finale */
+        .finale h1 {
+            font-size: 32px;
+        }
+
+        .finale p {
+            font-size: 20px;
+        }
+
+        @media (max-width: 360px) {
+            .buttons {
+                flex-direction: column;
+                height: auto;
+            }
+
+            #noBtn {
+                top: 60px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hearts-container" id="hearts"></div>
+
+    <div class="card" id="card">
+        <h1 id="title"></h1>
+        <p id="question"></p>
+
+        <div class="buttons" id="buttonsRow">
+            <button id="yesBtn">Yes 💖</button>
+            <button id="noBtn">No 🙄</button>
+        </div>
+
+        <div class="note" id="note"></div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const rawName = urlParams.get("name");
+
+        const name = rawName
+            ? rawName.charAt(0).toUpperCase() + rawName.slice(1)
+            : "there";
+
+
+        const titleEl = document.getElementById("title");
+        const questionEl = document.getElementById("question");
+        const noteEl = document.getElementById("note");
+        const yesBtn = document.getElementById("yesBtn");
+        const noBtn = document.getElementById("noBtn");
+        const buttonsRow = document.getElementById("buttonsRow");
+
+        titleEl.innerText = `Hey ${name}, will you be my Valentine?`;
+        noteEl.innerText = "Try pressing Yes 😌";
+
+        /* Backgrounds */
+        const backgrounds = [
+            "linear-gradient(135deg, #ffdde1, #ee9ca7)",
+            "linear-gradient(135deg, #fbc2eb, #a6c1ee)",
+            "linear-gradient(135deg, #ffecd2, #fcb69f)",
+            "linear-gradient(135deg, #fccb90, #d57eeb)",
+
+            "linear-gradient(135deg, #ff9a9e, #fad0c4)",
+            "linear-gradient(135deg, #a18cd1, #fbc2eb)",
+            "linear-gradient(135deg, #ff758c, #ff7eb3)",
+            "linear-gradient(135deg, #fdfbfb, #ebedee)",
+            "linear-gradient(135deg, #89f7fe, #66a6ff)",
+            "linear-gradient(135deg, #f6d365, #fda085)",
+            "linear-gradient(135deg, #84fab0, #8fd3f4)",
+            "linear-gradient(135deg, #cfd9df, #e2ebf0)",
+            "linear-gradient(135deg, #ff9966, #ff5e62)",
+            "linear-gradient(135deg, #7f7fd5, #86a8e7, #91eae4)",
+            "linear-gradient(135deg, #ff6a88, #ff99ac)",
+            "linear-gradient(135deg, #36d1dc, #5b86e5)",
+            "linear-gradient(135deg, #ffafbd, #ffc3a0)",
+            "linear-gradient(135deg, #2193b0, #6dd5ed)",
+            "linear-gradient(135deg, #cc2b5e, #753a88)",
+            "linear-gradient(135deg, #42275a, #734b6d)"
+        ];
+
+
+        function setRandomBackground() {
+            document.body.style.background =
+                backgrounds[Math.floor(Math.random() * backgrounds.length)];
+        }
+
+        setRandomBackground();
+
+        /* ------------------ Question Sets ------------------ */
+        const questionSets = [
+            ["Do you promise to be my Valentine?", "Are you REALLY sure?", "Your heart is saying yes… right?", "Still choosing yes?", "Okay, destiny time 💘"],
+            ["So… Valentine date with me?", "Wait wait, think again", "You’re smiling right now", "Your phone wants you to say yes", "Final answer?"],
+            ["Be honest… you like me", "That no button looks tired", "You came this far", "Heart says yes", "Lock it in 💞"],
+            ["Can I steal your heart today?", "Warning: this gets romantic", "You can’t escape love", "Almost there", "Say yes already 😍"],
+            ["Are we officially a thing now?", "Your future self says yes", "This button loves you", "Don’t break its heart", "One last step 💖"],
+            ["Roses are red…", "Violets are blue…", "There’s only one answer…", "And it’s waiting for you", "Choose wisely 💘"],
+            ["Knock knock…", "Who’s there?", "Your Valentine", "Waiting for yes", "Open your heart 💞"],
+            ["Did you really think No would work?", "Be honest… you like this game", "Your finger is hovering over Yes", "Just accept your fate", "Say yes, villain style 😈💘"],
+
+            ["Are you scared of love?", "Is that a tiny smile?", "You can’t outrun destiny", "Almost trapped", "Press Yes or I steal your heart 😏"],
+
+            ["Do you feel the tension?", "Heartbeat says yes", "Brain says don’t…", "Heart says DO IT", "Choose love 😈💖"],
+
+            ["Plot twist incoming…", "You are the main character", "This is a rom-com", "And I’m your Valentine", "Roll credits with Yes 🎬💘"],
+
+            ["You clicked this link for a reason", "Curiosity got you here", "Now you’re invested", "No escape route found", "Say yes already 😜"],
+
+            ["Are you blushing right now?", "Phone is getting warm", "That’s love loading", "Almost complete…", "Install Valentine.exe 💻💘"],
+
+            ["I see you chasing No", "But Yes is chasing you", "Love is faster", "Almost caught", "Boom — say yes 😈"],
+
+            ["This is psychological warfare", "Cute warfare though", "Your defenses are weak", "Surrender to love", "Yes is inevitable 💖"],
+
+            ["Warning: Romantic trap ahead", "You stepped on it", "Too late to turn back", "Only Yes unlocks exit", "Choose wisely 😏"],
+
+            ["You’re smiling again", "Don’t deny it", "Your heart betrayed you", "Last chance to resist", "Or join me 😈💞"]
+
+        ];
+
+        /* ------------------ Notes ------------------ */
+        const notes = [
+            "Hmm… the No button looks nervous 😅",
+            "It keeps running for a reason 👀",
+            "Your heart knows the answer 💗",
+            "Stop chasing No… chase happiness 😌",
+            "Okay okay, just press Yes already 😍",
+            "Cupid is watching you 🏹",
+            "Your smile just moved the Yes button",
+            "Love.exe is loading…",
+            "This is your romantic destiny ✨",
+            "Even the stars say yes 🌟",
+            "Running from love is cardio 💀😂",
+            "No button needs therapy now 😭",
+            "Your mouse is tired, your heart is not 💖",
+            "Caught you smiling 😏",
+            "This is emotional blackmail (cute version)",
+            "Yes button feels lonely… tap it",
+            "Your destiny is one click away",
+            "Love loading… please wait ⏳",
+            "No button on vacation 🏖️",
+            "Stop chasing, start loving 😈",
+            "Resistance level: low",
+            "Cupid upgraded to hacker mode 💻🏹",
+            "Heart.exe has stopped responding",
+            "Certified romance moment",
+            "You triggered the cute ending 💞"
+
+        ];
+
+        /* ------------------ Finale Sets (with name) ------------------ */
+        const finaleSets = [
+            { title: `YAY ${name}!!! 💖🥰`, text: `${name}, you’re officially my Valentine 💘` },
+            { title: `OMG ${name}! 😍`, text: `Best decision ever, ${name} 💞` },
+            { title: `It’s a YES ${name}!!! 🎉`, text: `Love just unlocked for you, ${name} 💖` },
+            { title: `Mission Complete 💘`, text: `${name} and me = Valentine mode 🥰` },
+            { title: `Cupid Wins 🏹`, text: `My heart belongs to you, ${name} 💗` },
+            { title: `Forever Starts Now ✨`, text: `Happy Valentine, ${name}, my favorite person 💞` },
+            { title: `Caught You ${name} 😏`, text: `${name}, resistance was futile. You are now my Valentine 😈💘` },
+            { title: `Oops ${name}! 💥`, text: `You just signed a love contract with me 📝💖` },
+            { title: `Too Late ${name} 😜`, text: `No refunds, no escape, only love 💞` },
+            { title: `System Error ❤️`, text: `${name} clicked YES.exe and love installed successfully 😎` },
+            { title: `Game Over ${name} 🎮`, text: `Winner: Us. Prize: Unlimited cuddles 🥰` },
+            { title: `Uh Oh ${name} 😈`, text: `You fell into my Valentine trap 💘` },
+            { title: `Breaking News 📰`, text: `${name} officially stolen my heart 💗` },
+            { title: `Congratulations ${name} 🎉`, text: `You unlocked the secret romance level 💖` },
+            { title: `Plot Twist ${name} 🤯`, text: `We’re Valentine partners now 😏` },
+            { title: `Warning ${name} ⚠️`, text: `Extreme cuteness incoming… caused by you 💞` },
+            { title: `Love Hack Activated 💻`, text: `${name} just hacked into my heart 😍` },
+            { title: `Arrested ${name} 🚓`, text: `Crime: Being too lovable 💘` },
+            { title: `Mission Failed Successfully 😎`, text: `${name}, you tried to say no but love said YES 💖` },
+            { title: `Achievement Unlocked 🏆`, text: `${name}: Professional Heart Stealer 💗` },
+            { title: `404 No Escape 😈`, text: `${name}, Valentine status found 💘` },
+            { title: `Boom ${name}! 💥`, text: `Love bomb activated successfully 💞` },
+            { title: `Oopsie ${name} 🙈`, text: `Now you owe me chocolates and hugs 🍫🥰` },
+            { title: `Hehe ${name} 😜`, text: `You walked into this romance on purpose 💖` },
+            { title: `Surprise ${name}! 🎁`, text: `You’re stuck being my Valentine 💘` },
+            { title: `Final Boss Defeated 🖤`, text: `${name}, your heart belongs to me now 😈💞` }
+
+        ];
+
+        const questions = questionSets[Math.floor(Math.random() * questionSets.length)];
+        let step = 0;
+        questionEl.innerText = questions[0];
+
+        /* Position NO beside YES */
+        function resetNoButtonPosition() {
+            noBtn.classList.remove("runaway");
+
+            const rowRect = buttonsRow.getBoundingClientRect();
+            const yesRect = yesBtn.getBoundingClientRect();
+
+            noBtn.style.left =
+                yesRect.left - rowRect.left + yesRect.width + 30 + "px";
+
+            noBtn.style.top = "4px";
+        }
+
+
+
+        window.onload = resetNoButtonPosition;
+        window.onresize = resetNoButtonPosition;
+
+        /* YES button */
+        yesBtn.addEventListener("click", () => {
+            cardEl.classList.add("blur-bg");
+
+            // Random effect
+            const effects = ["shakeCard", "pulse", "bounce", "spin", "wiggle"];
+            const chosenEffect = effects[Math.floor(Math.random() * effects.length)];
+
+            cardEl.classList.add(chosenEffect);
+
+            // Remove after animation ends
+            setTimeout(() => cardEl.classList.remove(chosenEffect), 800);
+
+            // Next question or finale
+            step++;
+            if (step < questions.length) {
+                questionEl.innerText = questions[step];
+                noteEl.innerText = notes[Math.min(step, notes.length - 1)];
+                setRandomBackground();
+                resetNoButtonPosition();
+            } else {
+                finale();
+            }
+
+            // Trigger heart burst
+            spawnHeartBurst(0);
+        });
+
+        /* Runaway NO button */
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+
+        document.addEventListener("mousemove", evade);
+        document.addEventListener("touchmove", evade);
+
+        function evade(e) {
+            const rect = noBtn.getBoundingClientRect();
+
+            lastMouseX = e.touches ? e.touches[0].clientX : e.clientX;
+            lastMouseY = e.touches ? e.touches[0].clientY : e.clientY;
+
+            const btnX = rect.left + rect.width / 2;
+            const btnY = rect.top + rect.height / 2;
+
+            const dx = btnX - lastMouseX;
+            const dy = btnY - lastMouseY;
+
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 120) {
+                moveNoButtonFarAway();
+            }
+        }
+
+        function moveNoButtonFarAway() {
+            noBtn.classList.add("runaway");
+
+            const padding = 20;
+            const minDistance = 260;
+
+            let newX, newY;
+            let attempts = 0;
+
+            do {
+                newX =
+                    Math.random() * (window.innerWidth - noBtn.offsetWidth - padding * 2) + padding;
+
+                newY =
+                    Math.random() * (window.innerHeight - noBtn.offsetHeight - padding * 2) + padding;
+
+                attempts++;
+            } while (
+                Math.hypot(newX - lastMouseX, newY - lastMouseY) < minDistance &&
+                attempts < 20
+            );
+
+            noBtn.style.left = `${newX}px`;
+            noBtn.style.top = `${newY}px`;
+        }
+
+
+        /* Finale */
+        function finale() {
+
+            cardEl.classList.add("flip");
+            buttonsRow.style.display = "none";
+            const card = document.getElementById("card");
+
+            const finaleData = finaleSets[Math.floor(Math.random() * finaleSets.length)];
+
+            card.innerHTML = `
+  <div class="finale">
+    <h1>${finaleData.title}</h1>
+    <p>${finaleData.text}</p>
+  </div>
+`;
+
+            const end = Date.now() + 3000;
+            (function frame() {
+                confetti({
+                    particleCount: 12,
+                    spread: 90,
+                    origin: { y: 0.6 },
+                    shapes: ["heart"],
+                    colors: ["#ff4d6d", "#ff758f", "#ffb3c1"]
+                });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            })();
+        }
+        const heartsContainer = document.getElementById("hearts");
+        const cardEl = document.getElementById("card");
+
+        function spawnHeartBurst(count = 6) {
+            const rect = cardEl.getBoundingClientRect();
+
+            for (let i = 0; i < count; i++) {
+                const heart = document.createElement("div");
+                heart.className = "heart";
+
+                const x =
+                    rect.left +
+                    Math.random() * rect.width;
+
+                const y =
+                    rect.top +
+                    rect.height -
+                    Math.random() * 20;
+
+                const duration = 3 + Math.random() * 2;
+
+                heart.style.left = `${x}px`;
+                heart.style.top = `${y}px`;
+                heart.style.animationDuration = `${duration}s`;
+
+                heartsContainer.appendChild(heart);
+
+                setTimeout(() => heart.remove(), duration * 1000);
+            }
+        }
+
+        /* Continuous soft hearts */
+        setInterval(() => {
+            spawnHeartBurst(6);
+        }, 600);
+
+        /* Stronger burst when YES is clicked */
+        yesBtn.addEventListener("click", () => {
+            spawnHeartBurst(0);
+        });
+
+    </script>
+
+</body>
+
+</html>
