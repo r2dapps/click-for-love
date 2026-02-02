@@ -1,4 +1,3 @@
-Absolutely! Here's a polished `README.md` for your project that explains it clearly, is friendly, and ready for GitHub Pages:
 
 ```markdown
 # Valentine Alert! 💘
@@ -29,7 +28,7 @@ Perfect for sending to your crush or just spreading some love online.
 2. **Add a name in the URL** to personalize it:
 ```
 
-[https://yourusername.github.io/valentine-alert/?name=Alex](https://yourusername.github.io/valentine-alert/?name=Alex)
+[https://r2dapps.github.io/click-for-love//?name=Alex]([https://yourusername.github.io/valentine-alert](https://r2dapps.github.io/click-for-love/)/?name=Alex)
 
 ```
 3. **Click the “Yes 💖” button** and watch the fun unfold.
@@ -55,7 +54,7 @@ Perfect for sending to your crush or just spreading some love online.
 5. GitHub will provide a live URL like:
 ```
 
-[https://yourusername.github.io/valentine-alert/](https://yourusername.github.io/valentine-alert/)
+[https://r2dapps.github.io/click-for-love/]([https://yourusername.github.io/valentine-alert/](https://r2dapps.github.io/click-for-love/))
 
 ```
 
@@ -85,5 +84,3 @@ This project is free to use and share for fun and personal projects. Spread the 
 ```
 
 ---
-
-If you want, I can also **write a super short, playful version of the README optimized for GitHub Pages** that will **look fun right on the repo front page**—more like a “romantic landing page in words.”
